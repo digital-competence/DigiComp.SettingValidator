@@ -1,0 +1,18 @@
+{
+	"name":"digicomp/settingvalidator",
+	"type":"typo3-flow-package",
+	"description":"",
+	"require":{
+        "typo3/flow":"~2.0"
+	},
+	"autoload":{
+		"psr-0":{
+			"DigiComp\\SettingValidator":"Classes"
+		}
+	},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
