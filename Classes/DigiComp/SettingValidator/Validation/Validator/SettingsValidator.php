@@ -62,6 +62,9 @@ class SettingsValidator extends AbstractValidator {
 		$config = &$this->validations[$name];
 		foreach($config as $validatorConfig) {
 			$validator = $this->validatorResolver->createValidator($validatorConfig['validator'], $validatorConfig['options']);
+			if (!$validator) {
+				throw new \Exception('Validator could not be resolved: ' . $validatorConfig['validator'] . '. Check your validation.yaml', 1402326139);
+			}
 			if (isset($validatorConfig['property'])) {
 				$this->result->forProperty($validatorConfig['property'])->merge($validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property'])));
 			} else {
