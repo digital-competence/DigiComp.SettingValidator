@@ -12,6 +12,8 @@ use TYPO3\Flow\Validation\Validator\AbstractValidator;
 use TYPO3\Flow\Validation\ValidatorResolver;
 
 /**
+ * Validator resolving other Validators defined in Validation.yaml
+ *
  * @Flow\Scope("prototype")
  */
 class SettingsValidator extends AbstractValidator {
