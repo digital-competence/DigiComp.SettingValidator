@@ -6,6 +6,7 @@ use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Configuration\ConfigurationManager;
 use TYPO3\Flow\Reflection\ObjectAccess;
 use TYPO3\Flow\Reflection\ReflectionService;
+use TYPO3\Flow\Validation\Exception\InvalidValidationConfigurationException;
 use TYPO3\Flow\Validation\Exception\InvalidValidationOptionsException;
 use TYPO3\Flow\Validation\Validator\AbstractValidator;
 use TYPO3\Flow\Validation\ValidatorResolver;
@@ -51,8 +52,8 @@ class SettingsValidator extends AbstractValidator {
 	 *
 	 * @param mixed $value
 	 *
-	 * @return void
-	 * @throws \TYPO3\Flow\Validation\Exception\InvalidValidationOptionsException if invalid validation options have been specified in the constructor
+	 * @throws InvalidValidationOptionsException
+	 * @throws InvalidValidationConfigurationException
 	 */
 	protected function isValid($value) {
 		$name = $this->options['name'] ? $this->options['name'] : $this->reflectionService->getClassNameByObject($value);
@@ -63,7 +64,7 @@ class SettingsValidator extends AbstractValidator {
 		foreach($config as $validatorConfig) {
 			$validator = $this->validatorResolver->createValidator($validatorConfig['validator'], $validatorConfig['options']);
 			if (!$validator) {
-				throw new \Exception('Validator could not be resolved: ' . $validatorConfig['validator'] . '. Check your validation.yaml', 1402326139);
+				throw new InvalidValidationConfigurationException('Validator could not be resolved: ' . $validatorConfig['validator'] . '. Check your validation.yaml', 1402326139);
 			}
 			if (isset($validatorConfig['property'])) {
 				$this->result->forProperty($validatorConfig['property'])->merge($validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property'])));
