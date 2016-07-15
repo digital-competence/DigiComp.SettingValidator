@@ -1,0 +1,23 @@
+SuperVendor\SuperPackage\Domain\Model\Order:
+  -
+    property: price
+    validator: NumberRange
+    options:
+      maximum: 20
+      minimum: 10
+  -
+    validator: SuperVendor.SuperPackage:SomeOtherValidator #validates the complete object
+    options: []
+  -
+    property: customer
+    validator: DigiComp.SettingValidator:Settings
+    options:
+      name: OrderCustomer
+
+OrderCustomer:
+  -
+    property: firstName
+    validator: StringLength
+    options:
+      minimum: 3
+      maximum: 20
