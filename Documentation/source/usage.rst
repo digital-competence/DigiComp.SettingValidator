@@ -36,7 +36,7 @@ If you prefer the name, you have to configure the validator to use the specific 
 
     /**
      * @param Order $order
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", name="MyCustomName")
+     * @Flow\Validate(argumentName="order", type="DigiComp.SettingValidator:Settings", options={"name"="MyCustomName"})
      */
     public function createOrder($order) {...}
 
