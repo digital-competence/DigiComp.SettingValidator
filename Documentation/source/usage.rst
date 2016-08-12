@@ -1,4 +1,4 @@
-.. highlight:: yaml
+.. highlight:: php
 .. _usage:
 
 Place of configuration
@@ -15,8 +15,7 @@ calling them like :file:`Validation.Users.yaml`.
 Types of configuration
 ======================
 
-Inside this files you define the validation rules either for a fully qualified class name, or a
-custom name.
+You can define the validation rules either for a fully qualified class name, or a custom name.
 
 Given the following :file:`Validation.yaml`:
 
@@ -30,15 +29,13 @@ One class is configured by it's fully qualified class name
 Custom Name
 -----------
 
-If you prefer the name, you have to configure the validator to use the specific name:
-
-.. code-block:: php
+If you prefer the name, you have to configure the validator to use the specific name::
 
     /**
-     * @param Order $order
-     * @Flow\Validate(argumentName="order", type="DigiComp.SettingValidator:Settings", options={"name"="MyCustomName"})
+     * @param OrderCustomer $orderCustomer
+     * @Flow\Validate(argumentName="orderCustomer", type="DigiComp.SettingValidator:Settings", options={"name"="OrderCustomer"})
      */
-    public function createOrder($order) {...}
+    public function createOrder(OrderCustomer $orderCustomer) {...}
 
 .. _types-of-configuration-fqcn:
 
@@ -46,15 +43,13 @@ Fully qualified class namespace
 -------------------------------
 
 If you provide the fully qualified class name, you don't have to provide the additional
-argument, the following code will be enough:
-
-.. code-block:: php
+argument, the following code will be enough::
 
     /**
      * @param Order $order
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings")
+     * @Flow\Validate(argumentName="order, type="DigiComp.SettingValidator:Settings")
      */
-    public function createOrder($order) {...}
+    public function createOrder(Order $order) {...}
 
 .. _structure-of-configuration:
 
