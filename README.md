@@ -9,7 +9,7 @@ Lets imagine you had this action-method:
 
 	/**
 	 * @param Order $order
-	 * @Flow\Validate(type="DigiComp.SettingValidator:Settings")
+	 * @Flow\Validate(type="DigiComp.SettingValidator:Settings", argumentName="$order")
 	 */
 	public function createOrder($order) {...}
 

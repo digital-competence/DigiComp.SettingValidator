@@ -33,7 +33,7 @@ If you prefer the name, you have to configure the validator to use the specific 
 
     /**
      * @param OrderCustomer $orderCustomer
-     * @Flow\Validate(argumentName="orderCustomer", type="DigiComp.SettingValidator:Settings", options={"name"="OrderCustomer"})
+     * @Flow\Validate(argumentName="$orderCustomer", type="DigiComp.SettingValidator:Settings", options={"name"="OrderCustomer"})
      */
     public function createOrder(OrderCustomer $orderCustomer) {...}
 
@@ -47,7 +47,7 @@ argument, the following code will be enough::
 
     /**
      * @param Order $order
-     * @Flow\Validate(argumentName="order, type="DigiComp.SettingValidator:Settings")
+     * @Flow\Validate(argumentName="$order, type="DigiComp.SettingValidator:Settings")
      */
     public function createOrder(Order $order) {...}
 

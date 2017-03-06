@@ -12,7 +12,7 @@ Lets imagine you have this action-method::
 
     /**
      * @param Order $order
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings")
+     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", argumentName="$order")
      */
     public function createOrder(Order $order) {...}
 
