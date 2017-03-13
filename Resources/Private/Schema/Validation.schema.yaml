@@ -6,6 +6,6 @@ additionalProperties:
     additionalProperties: false
     # This validation sadly only hits the first level of validation, and options are not coverable with current validator
     properties:
-      validator: {type: string, required: TRUE}
-      options: {type: dictionary, required: TRUE}
-      property: {type: string, required: FALSE}
+      validator: {type: string, required: true}
+      options: {type: dictionary, required: true}
+      property: {type: string, required: false}

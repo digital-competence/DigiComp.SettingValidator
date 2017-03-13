@@ -1,7 +1,7 @@
 {
     "name": "digicomp/settingvalidator",
-    "type": "typo3-flow-package",
-    "description": "Just a TYPO3\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
+    "type": "neos-package",
+    "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
@@ -13,6 +13,7 @@
     "license": "MIT",
     "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
     "keywords": [
+        "Neos",
         "Flow",
         "validation"
     ],
