@@ -18,7 +18,7 @@
         "validation"
     ],
     "require": {
-        "neos/flow": "~4.0"
+        "neos/flow": "~4.1"
     },
     "autoload": {
         "psr-0": {
