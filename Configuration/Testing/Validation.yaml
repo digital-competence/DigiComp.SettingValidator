@@ -1,0 +1,18 @@
+DigiComp\SettingValidator\Tests\Functional\Fixtures\TestObject:
+  -
+    property: shouldBeTrue
+    validator: BooleanValue
+    options:
+      expectedValue: true
+  -
+    property: shouldBeFalse
+    validator: BooleanValue
+    options:
+      expectedValue: false
+
+
+TrueValidator:
+  -
+    validator: BooleanValue
+    options:
+      expectedValue: true

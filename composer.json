@@ -25,6 +25,11 @@
             "DigiComp\\SettingValidator\\": "Classes"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "DigiComp\\SettingValidator\\Tests\\": "Tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev",
