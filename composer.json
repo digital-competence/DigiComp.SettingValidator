@@ -21,8 +21,8 @@
         "neos/flow": "~4.1"
     },
     "autoload": {
-        "psr-0": {
-            "DigiComp\\SettingValidator": "Classes"
+        "psr-4": {
+            "DigiComp\\SettingValidator\\": "Classes"
         }
     },
     "extra": {
