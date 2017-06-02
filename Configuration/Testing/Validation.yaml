@@ -1,18 +1,14 @@
 DigiComp\SettingValidator\Tests\Functional\Fixtures\TestObject:
-  -
-    property: shouldBeTrue
-    validator: BooleanValue
-    options:
-      expectedValue: true
-  -
-    property: shouldBeFalse
-    validator: BooleanValue
-    options:
-      expectedValue: false
-
+  properties:
+    shouldBeTrue:
+      BooleanValue:
+        expectedValue: true
+    shouldBeFalse:
+      BooleanValue:
+        expectedValue: false
+      Grumble: ~
 
 TrueValidator:
-  -
-    validator: BooleanValue
-    options:
+  self:
+    BooleanValue:
       expectedValue: true

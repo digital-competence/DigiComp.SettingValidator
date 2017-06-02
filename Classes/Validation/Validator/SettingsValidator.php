@@ -75,7 +75,31 @@ class SettingsValidator extends AbstractValidator
             );
         }
 
-        $config = &$this->validations[$name];
+        $config = [];
+        if (isset($this->validations[$name]['self'])) {
+            foreach ($this->validations[$name]['self'] as $validator => &$validation) {
+                if (is_null($validation)) {
+                    continue;
+                }
+                $newValidation['options'] = $validation;
+                $newValidation['validator'] = $validator;
+                $config[] = $newValidation;
+            }
+        }
+        if (isset($this->validations[$name]['properties'])) {
+            foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
+                foreach ($validation as $validator => &$options) {
+                    if (is_null($options)) {
+                        continue;
+                    }
+                    $newValidation['property'] = $propertyName;
+                    $newValidation['validator'] = $validator;
+                    $newValidation['options'] = $options;
+                    $config[] = $newValidation;
+                }
+            }
+        }
+
         foreach ($config as $validatorConfig) {
             $validator = $this->validatorResolver->createValidator(
                 $validatorConfig['validator'],
