@@ -85,6 +85,41 @@ class SettingsValidator extends AbstractValidator
             );
         }
 
+        $config = $this->getConfigForName($name);
+
+        foreach ($config as $validatorConfig) {
+            $validator = $this->validatorResolver->createValidator(
+                $validatorConfig['validator'],
+                $validatorConfig['options']
+            );
+
+            if (! $validator) {
+                throw new InvalidValidationConfigurationException(
+                    sprintf(
+                        'Validator could not be resolved: "%s" Check your Validation.yaml',
+                        $validatorConfig['validator']
+                    ),
+                    1402326139
+                );
+            }
+
+            if (isset($validatorConfig['property'])) {
+                $this->result->forProperty($validatorConfig['property'])->merge(
+                    $validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property']))
+                );
+            } else {
+                $this->result->merge($validator->validate($value));
+            }
+        }
+    }
+
+    /**
+     * @param $name
+     *
+     * @return array
+     */
+    protected function getConfigForName($name): array
+    {
         $config = [];
         if (isset($this->validations[$name]['self'])) {
             foreach ($this->validations[$name]['self'] as $validator => &$validation) {
@@ -109,27 +144,6 @@ class SettingsValidator extends AbstractValidator
                 }
             }
         }
-
-        foreach ($config as $validatorConfig) {
-            $validator = $this->validatorResolver->createValidator(
-                $validatorConfig['validator'],
-                $validatorConfig['options']
-            );
-
-            if (! $validator) {
-                throw new InvalidValidationConfigurationException(
-                    'Validator could not be resolved: ' . $validatorConfig['validator'] . '. Check your Validation.yaml',
-                    1402326139
-                );
-            }
-
-            if (isset($validatorConfig['property'])) {
-                $this->result->forProperty($validatorConfig['property'])->merge(
-                    $validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property']))
-                );
-            } else {
-                $this->result->merge($validator->validate($value));
-            }
-        }
+        return $config;
     }
 }
