@@ -39,7 +39,8 @@ class SettingsValidator extends AbstractValidator
      * @var array
      */
     protected $supportedOptions = [
-        'name' => ['', 'Set the name of the setting-array to use', 'string', false]
+        'name' => ['', 'Set the name of the setting-array to use', 'string', false],
+        'validationGroups' => [['Default'], 'Same as "Validation Groups" of Flow Framework.', 'array', false],
     ];
 
     /**
@@ -77,6 +78,12 @@ class SettingsValidator extends AbstractValidator
 
         $config = &$this->validations[$name];
         foreach ($config as $validatorConfig) {
+            if (! $this->doesValidationGroupsMatch($validatorConfig)) {
+                continue;
+            }
+
+            $this->handleValidationGroups($validatorConfig);
+
             $validator = $this->validatorResolver->createValidator(
                 $validatorConfig['validator'],
                 $validatorConfig['options']
@@ -96,6 +103,35 @@ class SettingsValidator extends AbstractValidator
             } else {
                 $this->result->merge($validator->validate($value));
             }
+        }
+    }
+
+    /**
+     * Check whether at least one configured group does match, if any is configured.
+     *
+     * @param array $validatorConfig
+     * @return bool
+     */
+    protected function doesValidationGroupsMatch(array &$validatorConfig)
+    {
+        if (isset($validatorConfig['validationGroups'])
+            && count(array_intersect($validatorConfig['validationGroups'], $this->options['validationGroups'])) === 0
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Add validation groups for recursion if necessary.
+     *
+     * @param array $validatorConfig
+     */
+    protected function handleValidationGroups(array &$validatorConfig)
+    {
+        if ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings' && empty($validatorConfig['options']['validationGroups'])) {
+            $validatorConfig['options']['validationGroups'] = $this->options['validationGroups'];
         }
     }
 }
