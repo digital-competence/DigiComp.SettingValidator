@@ -1,6 +1,16 @@
 <?php
 namespace DigiComp\SettingValidator\Validation\Validator;
 
+/*
+ * This file is part of the DigiComp.SettingValidator package.
+ *
+ * (c) digital competence
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Configuration\ConfigurationManager;
 use Neos\Flow\Reflection\ReflectionService;
@@ -76,7 +86,8 @@ class SettingsValidator extends AbstractValidator
             );
         }
 
-        $config = &$this->validations[$name];
+        $config = $this->getConfigForName($name);
+
         foreach ($config as $validatorConfig) {
             if (! $this->doesValidationGroupsMatch($validatorConfig)) {
                 continue;
@@ -91,7 +102,10 @@ class SettingsValidator extends AbstractValidator
 
             if (! $validator) {
                 throw new InvalidValidationConfigurationException(
-                    'Validator could not be resolved: ' . $validatorConfig['validator'] . '. Check your Validation.yaml',
+                    sprintf(
+                        'Validator could not be resolved: "%s" Check your Validation.yaml',
+                        $validatorConfig['validator']
+                    ),
                     1402326139
                 );
             }
@@ -104,6 +118,40 @@ class SettingsValidator extends AbstractValidator
                 $this->result->merge($validator->validate($value));
             }
         }
+    }
+
+    /**
+     * @param $name
+     *
+     * @return array
+     */
+    protected function getConfigForName($name): array
+    {
+        $config = [];
+        if (isset($this->validations[$name]['self'])) {
+            foreach ($this->validations[$name]['self'] as $validator => &$validation) {
+                if (is_null($validation)) {
+                    continue;
+                }
+                $newValidation['options'] = $validation;
+                $newValidation['validator'] = $validator;
+                $config[] = $newValidation;
+            }
+        }
+        if (isset($this->validations[$name]['properties'])) {
+            foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
+                foreach ($validation as $validator => &$options) {
+                    if (is_null($options)) {
+                        continue;
+                    }
+                    $newValidation['property'] = $propertyName;
+                    $newValidation['validator'] = $validator;
+                    $newValidation['options'] = $options;
+                    $config[] = $newValidation;
+                }
+            }
+        }
+        return $config;
     }
 
     /**

@@ -1,11 +1,11 @@
 type: dictionary
 additionalProperties:
-  type: array
-  items:
+  type: dictionary
+  additionalProperties: false
+  properties:
     type: dictionary
     additionalProperties: false
-    # This validation sadly only hits the first level of validation, and options are not coverable with current validator
     properties:
-      validator: {type: string, required: true}
-      options: {type: dictionary, required: true}
-      property: {type: string, required: false}
+      type: dictionary
+    self:
+      type: dictionary
