@@ -133,7 +133,6 @@ class SettingsValidator extends AbstractValidator
                 if (is_null($validation)) {
                     continue;
                 }
-                $this->extractValidationGroupsFromOptions($newValidation);
                 $newValidation['options'] = $validation;
                 $newValidation['validator'] = $validator;
                 $config[] = $newValidation;
@@ -145,7 +144,6 @@ class SettingsValidator extends AbstractValidator
                     if (is_null($options)) {
                         continue;
                     }
-                    $this->extractValidationGroupsFromOptions($options);
                     $newValidation['property'] = $propertyName;
                     $newValidation['validator'] = $validator;
                     $newValidation['options'] = $options;
@@ -164,8 +162,8 @@ class SettingsValidator extends AbstractValidator
      */
     protected function doesValidationGroupsMatch(array &$validatorConfig)
     {
-        if (isset($validatorConfig['validationGroups'])
-            && count(array_intersect($validatorConfig['validationGroups'], $this->options['validationGroups'])) === 0
+        if (isset($validatorConfig['options']['validationGroups'])
+            && count(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups'])) === 0
         ) {
             return false;
         }
@@ -180,19 +178,8 @@ class SettingsValidator extends AbstractValidator
      */
     protected function handleValidationGroups(array &$validatorConfig)
     {
-        if ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings' && empty($validatorConfig['options']['validationGroups'])) {
-            $validatorConfig['options']['validationGroups'] = $this->options['validationGroups'];
-        }
-    }
-
-    /**
-     * @param $newValidation
-     */
-    protected function extractValidationGroupsFromOptions(&$newValidation)
-    {
-        if (isset($newValidation['options']['validationGroups'])) {
-            $newValidation['validationGroups'] = $newValidation['options']['validationGroups'];
-            unset($newValidation['options']['validationGroups']);
+        if ($validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings' || empty($validatorConfig['options']['validationGroups'])) {
+            unset($validatorConfig['options']['validationGroups']);
         }
     }
 }

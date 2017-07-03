@@ -12,3 +12,17 @@ TrueValidator:
   self:
     BooleanValue:
       expectedValue: true
+
+GroupValidatorDefault:
+  self:
+    BooleanValue:
+      expectedValue: true
+      validationGroups:
+        - Default
+GroupValidatorCustom:
+  self:
+    BooleanValue:
+      expectedValue: false
+      validationGroups:
+        - Custom
+
