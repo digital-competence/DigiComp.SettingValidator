@@ -50,7 +50,12 @@ class SettingsValidator extends AbstractValidator
      */
     protected $supportedOptions = [
         'name' => ['', 'Set the name of the setting-array to use', 'string', false],
-        'validationGroups' => [['Default'], 'Same as "Validation Groups" of Flow Framework.', 'array', false],
+        'validationGroups' => [
+            ['Default'],
+            'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
+            'array',
+            false
+        ],
     ];
 
     /**

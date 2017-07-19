@@ -43,7 +43,7 @@ class SettingsValidatorTest extends FunctionalTestCase
         $result = $validator->validate(new TestValidationGroupsDefaultObject());
         $this->assertTrue($result->hasErrors(), 'No Errors for validation group "Default"');
         $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Default"');
-        $this->assertCount(1, $result->forProperty('shouldBeTrue')->getErrors(), 'Got no error for shouldBeTrue property');
+        $this->assertCount(1, $result->forProperty('shouldBeTrue')->getErrors(), 'Got no error for property');
     }
 
     /**
@@ -55,6 +55,6 @@ class SettingsValidatorTest extends FunctionalTestCase
         $result = $validator->validate(new TestValidationGroupsCustomObject());
         $this->assertTrue($result->hasErrors(), 'No Errors for validation group "Custom"');
         $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Custom"');
-        $this->assertCount(1, $result->forProperty('shouldBeFalse')->getErrors(), 'Got no error for shouldBeFalse property');
+        $this->assertCount(1, $result->forProperty('shouldBeFalse')->getErrors(), 'Got no error for property');
     }
 }
