@@ -37,17 +37,21 @@ class SettingsValidatorTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function validationGroupsAreRespected()
+    public function defaultValidationGroupWorks()
     {
-        $validatorResolver = $this->objectManager->get(ValidatorResolver::class);
-
-        $validator = $validatorResolver->getBaseValidatorConjunction(TestValidationGroupsDefaultObject::class);
+        $validator = $this->objectManager->get(SettingsValidator::class, ['validationGroups' => ['Default']]);
         $result = $validator->validate(new TestValidationGroupsDefaultObject());
         $this->assertTrue($result->hasErrors(), 'No Errors for validation group "Default"');
         $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Default"');
         $this->assertCount(1, $result->forProperty('shouldBeTrue')->getErrors(), 'Got no error for shouldBeTrue property');
+    }
 
-        $validator = $validatorResolver->getBaseValidatorConjunction(TestValidationGroupsCustomObject::class);
+    /**
+     * @test
+     */
+    public function customValidationGroupWorks()
+    {
+        $validator = $this->objectManager->get(SettingsValidator::class, ['validationGroups' => ['Custom']]);
         $result = $validator->validate(new TestValidationGroupsCustomObject());
         $this->assertTrue($result->hasErrors(), 'No Errors for validation group "Custom"');
         $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Custom"');

@@ -6,13 +6,11 @@ use Neos\Flow\Annotations as Flow;
 class TestValidationGroupsDefaultObject
 {
     /**
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", options={"name": "GroupValidatorDefault"})
      * @var bool
      */
     protected $shouldBeTrue = false;
 
     /**
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", options={"name": "GroupValidatorCustom"})
      * @var bool
      */
     protected $shouldBeFalse = true;

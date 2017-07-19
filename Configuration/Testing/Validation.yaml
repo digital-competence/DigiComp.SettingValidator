@@ -13,16 +13,26 @@ TrueValidator:
     BooleanValue:
       expectedValue: true
 
-GroupValidatorDefault:
+DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsCustomObject:
   self:
-    BooleanValue:
-      expectedValue: true
-      validationGroups:
-        - Default
-GroupValidatorCustom:
-  self:
-    BooleanValue:
-      expectedValue: false
-      validationGroups:
-        - Custom
+    DigiComp.SettingValidator:Settings:
+      name: GroupValidatorCustom
 
+DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsDefaultObject:
+  self:
+    DigiComp.SettingValidator:Settings:
+      name: GroupValidatorDefault
+
+GroupValidatorDefault:
+  properties:
+    shouldBeTrue:
+      BooleanValue:
+        expectedValue: true
+
+GroupValidatorCustom:
+  properties:
+    shouldBeFalse:
+      BooleanValue:
+        expectedValue: false
+        validationGroups:
+          - Custom
