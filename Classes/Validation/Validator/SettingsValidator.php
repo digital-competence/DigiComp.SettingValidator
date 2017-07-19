@@ -178,7 +178,12 @@ class SettingsValidator extends AbstractValidator
      */
     protected function handleValidationGroups(array &$validatorConfig)
     {
-        if ($validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings' || empty($validatorConfig['options']['validationGroups'])) {
+        if (isset($validatorConfig['options']['validationGroups'])
+            && (
+                $validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings'
+                || empty($validatorConfig['options']['validationGroups'])
+            )
+        ) {
             unset($validatorConfig['options']['validationGroups']);
         }
     }
