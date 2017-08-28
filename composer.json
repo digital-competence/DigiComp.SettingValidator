@@ -1,7 +1,7 @@
 {
     "name": "digicomp/settingvalidator",
-    "type": "typo3-flow-package",
-    "description": "Just a TYPO3\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
+    "type": "neos-package",
+    "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
@@ -13,21 +13,27 @@
     "license": "MIT",
     "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
     "keywords": [
+        "Neos",
         "Flow",
         "validation"
     ],
     "require": {
-        "typo3/flow": "~2.0|~3.0",
-        "php": ">=5.3.0"
+        "neos/flow": "~4.1"
     },
     "autoload": {
-        "psr-0": {
-            "DigiComp\\SettingValidator": "Classes"
+        "psr-4": {
+            "DigiComp\\SettingValidator\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DigiComp\\SettingValidator\\Tests\\": "Tests"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.0.x-dev",
+            "dev-feature/neos-flow4": "2.0.x-dev"
         },
         "applied-flow-migrations": [
             "Inwebs.Basket-201409170938",
@@ -44,7 +50,23 @@
             "TYPO3.Fluid-20141113120800",
             "TYPO3.Flow-20141113121400",
             "TYPO3.Fluid-20141121091700",
-            "TYPO3.Fluid-20150214130800"
+            "TYPO3.Fluid-20150214130800",
+            "TYPO3.Flow-20151113161300",
+            "TYPO3.Flow-20161115140400",
+            "TYPO3.Flow-20161115140430",
+            "Neos.Flow-20161124204700",
+            "Neos.Flow-20161124204701",
+            "Neos.Flow-20161124224015",
+            "Neos.Eel-20161124230101",
+            "Neos.Imagine-20161124231742",
+            "Neos.Media-20161124233100",
+            "Neos.Flow-20161125124112",
+            "Neos.SwiftMailer-20161130105617",
+            "TYPO3.FluidAdaptor-20161130112935",
+            "Neos.Media-20161219094126",
+            "Neos.Flow-20170125103800",
+            "Neos.Flow-20170127183102",
+            "DigiComp.SettingValidator-20170603120900"
         ]
     }
 }
