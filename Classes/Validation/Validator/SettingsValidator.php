@@ -169,7 +169,7 @@ class SettingsValidator extends AbstractValidator
     protected function doesValidationGroupsMatch(array &$validatorConfig)
     {
         if (isset($validatorConfig['options']['validationGroups'])
-            && count(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups'])) === 0
+            && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))
         ) {
             return false;
         }
