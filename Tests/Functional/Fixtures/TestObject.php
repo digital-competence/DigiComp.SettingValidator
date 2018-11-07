@@ -16,7 +16,7 @@ class TestObject
     protected $shouldBeFalse = true;
 
     /**
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", options={"name": "TrueValidator"})
+     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", options={"name"="TrueValidator"})
      * @var bool
      */
     protected $shouldBeTrueAndValidatedByAnnotation = false;
