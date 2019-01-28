@@ -28,15 +28,20 @@ class Version20170603120900 extends AbstractMigration
      */
     public function up()
     {
-        $this->processConfiguration(Package::CONFIGURATION_TYPE_VALIDATION,
+        $this->processConfiguration(
+            Package::CONFIGURATION_TYPE_VALIDATION,
             function (&$configuration) {
                 foreach ($configuration as $validatorName => &$validators) {
+                    // guard that protects configuration, which has already the new format:
+                    if (isset($validators['properties']) || isset($validators['self'])) {
+                        continue;
+                    }
                     $newConfiguration = ['properties' => [], 'self' => []];
 
                     foreach ($validators as $key => &$validator) {
-                        if (!isset($validator['validator']) || !isset($validator['options'])) {
+                        if (! isset($validator['validator']) || ! isset($validator['options'])) {
                             $this->showWarning('The Validation.yaml files contained no validator or options for ' .
-                                'validation: "' . $validatorName . '.' . $key . '". It was not be migrated.');
+                                'validation: "' . $validatorName . '.' . $key . '". It was not migrated.');
                             continue;
                         }
                         if (isset($validator['property'])) {

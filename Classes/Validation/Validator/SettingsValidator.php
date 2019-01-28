@@ -126,7 +126,7 @@ class SettingsValidator extends AbstractValidator
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return array
      */
