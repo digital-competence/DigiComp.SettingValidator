@@ -31,8 +31,7 @@ class Package extends BasePackage
 
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
         $dispatcher->connect(ConfigurationManager::class, 'configurationManagerReady',
-            function ($configurationManager) {
-                /* @var ConfigurationManager $configurationManager */
+            function (ConfigurationManager $configurationManager) {
                 $configurationManager->registerConfigurationType(
                     static::CONFIGURATION_TYPE_VALIDATION,
                     ConfigurationManager::CONFIGURATION_PROCESSING_TYPE_DEFAULT,
