@@ -38,7 +38,7 @@ Then your Validation.yaml could look like this:
 	    options:
 	      minimum: 3
 	      maximum: 20
-    
+
 
 As you see: Nesting is possible ;) That way you can easily construct flexible structures.
 
