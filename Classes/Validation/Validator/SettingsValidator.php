@@ -23,8 +23,6 @@ use Neos\Utility\TypeHandling;
 
 /**
  * Validator resolving other Validators defined in Validation.yaml
- *
- * @Flow\Scope("prototype")
  */
 class SettingsValidator extends AbstractValidator
 {
