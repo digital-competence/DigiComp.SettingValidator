@@ -40,6 +40,7 @@ class SettingsValidator extends AbstractValidator
     /**
      * @var ReflectionService
      * @Flow\Inject
+     * @deprecated
      */
     protected $reflectionService;
 
