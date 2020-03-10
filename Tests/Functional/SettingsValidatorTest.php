@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\SettingValidator\Tests\Functional;
 
 use DigiComp\SettingValidator\Tests\Functional\Fixtures\TestObject;

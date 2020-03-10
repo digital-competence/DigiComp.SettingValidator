@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\SettingValidator;
 
 /*
@@ -30,7 +31,9 @@ class Package extends BasePackage
         parent::boot($bootstrap);
 
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
-        $dispatcher->connect(ConfigurationManager::class, 'configurationManagerReady',
+        $dispatcher->connect(
+            ConfigurationManager::class,
+            'configurationManagerReady',
             function (ConfigurationManager $configurationManager) {
                 $configurationManager->registerConfigurationType(
                     static::CONFIGURATION_TYPE_VALIDATION,
