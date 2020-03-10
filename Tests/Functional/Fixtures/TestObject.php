@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\SettingValidator\Tests\Functional\Fixtures;
 
 use Neos\Flow\Annotations as Flow;
