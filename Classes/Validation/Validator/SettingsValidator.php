@@ -168,9 +168,7 @@ class SettingsValidator extends AbstractValidator
      */
     protected function doesValidationGroupsMatch(array &$validatorConfig)
     {
-        if (isset($validatorConfig['options']['validationGroups'])
-            && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))
-        ) {
+        if (isset($validatorConfig['options']['validationGroups']) && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))) {
             return false;
         }
 
@@ -184,9 +182,7 @@ class SettingsValidator extends AbstractValidator
      */
     protected function handleValidationGroups(array &$validatorConfig)
     {
-        if (isset($validatorConfig['options']['validationGroups'])
-            && $validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings'
-        ) {
+        if (isset($validatorConfig['options']['validationGroups']) && $validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings') {
             unset($validatorConfig['options']['validationGroups']);
         } elseif ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings') {
             $validatorConfig['options']['validationGroups'] = $this->options['validationGroups'];
