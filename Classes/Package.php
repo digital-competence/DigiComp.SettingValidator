@@ -1,4 +1,5 @@
 <?php
+
 namespace DigiComp\SettingValidator;
 
 /*
