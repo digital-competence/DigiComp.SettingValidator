@@ -17,7 +17,7 @@ Then your Validation.yaml could look like this:
 
     SuperVendor\SuperPackage\Domain\Model\Order:
       -
-        property: price 
+        property: price
         validator: NumberRange
         options:
           maximum: 20
@@ -30,7 +30,7 @@ Then your Validation.yaml could look like this:
         validator: DigiComp.SettingValidator:Settings
         options:
           name: OrderCustomer
-          
+
     OrderCustomer:
       -
         property: firstName
