@@ -77,7 +77,6 @@ class SettingsValidator extends AbstractValidator
      * to Result.
      *
      * @param mixed $value
-     *
      * @throws InvalidValidationOptionsException
      * @throws InvalidValidationConfigurationException
      */
@@ -127,7 +126,6 @@ class SettingsValidator extends AbstractValidator
 
     /**
      * @param string $name
-     *
      * @return array
      */
     protected function getConfigForName($name): array
@@ -163,7 +161,6 @@ class SettingsValidator extends AbstractValidator
      * Check whether at least one configured group does match, if any is configured.
      *
      * @param array $validatorConfig
-     *
      * @return bool
      */
     protected function doesValidationGroupsMatch(array &$validatorConfig)
