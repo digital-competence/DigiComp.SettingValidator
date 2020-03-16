@@ -1,16 +1,6 @@
 <?php
 namespace Neos\Flow\Core\Migrations;
 
-/*
- * This file is part of the DigiComp.SettingValidator package.
- *
- * (c) digital competence
- *
- * This package is Open Source Software. For the full copyright and license
- * information, please view the LICENSE file which was distributed with this
- * source code.
- */
-
 use DigiComp\SettingValidator\Package;
 
 /**
@@ -18,6 +8,9 @@ use DigiComp\SettingValidator\Package;
  */
 class Version20170603120900 extends AbstractMigration
 {
+    /**
+     * @return string
+     */
     public function getIdentifier()
     {
         return 'DigiComp.SettingValidator-20170603120900';
