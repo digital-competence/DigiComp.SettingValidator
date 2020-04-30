@@ -14,7 +14,6 @@ namespace DigiComp\SettingValidator\Validation\Validator;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Configuration\ConfigurationManager;
-use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
 use Neos\Flow\Validation\Exception\InvalidValidationOptionsException;
 use Neos\Flow\Validation\Validator\AbstractValidator;
@@ -37,13 +36,6 @@ class SettingsValidator extends AbstractValidator
      * @var ConfigurationManager
      */
     protected $configurationManager;
-
-    /**
-     * @var ReflectionService
-     * @Flow\Inject
-     * @deprecated
-     */
-    protected $reflectionService;
 
     /**
      * @var array
