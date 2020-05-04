@@ -136,7 +136,7 @@ class SettingsValidator extends AbstractValidator
         }
         if (isset($this->validations[$name]['properties'])) {
             foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
-                foreach ($validation as $validator => &$options) {
+                foreach ($validation as $validator => $options) {
                     if (is_null($options)) {
                         continue;
                     }
@@ -156,7 +156,7 @@ class SettingsValidator extends AbstractValidator
      * @param array $validatorConfig
      * @return bool
      */
-    protected function doesValidationGroupsMatch(array &$validatorConfig)
+    protected function doesValidationGroupsMatch(array $validatorConfig)
     {
         if (isset($validatorConfig['options']['validationGroups']) && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))) {
             return false;
