@@ -33,9 +33,11 @@ class Version20170603120900 extends AbstractMigration
                     $newConfiguration = ['properties' => [], 'self' => []];
 
                     foreach ($validators as $key => &$validator) {
-                        if (! isset($validator['validator']) || ! isset($validator['options'])) {
-                            $this->showWarning('The Validation.yaml files contained no validator or options for ' .
-                                'validation: "' . $validatorName . '.' . $key . '". It was not migrated.');
+                        if (!isset($validator['validator']) || !isset($validator['options'])) {
+                            $this->showWarning(
+                                'The Validation.yaml files contained no validator or options for validation: ' .
+                                '"' . $validatorName . '.' . $key . '". It was not migrated.'
+                            );
                             continue;
                         }
                         if (isset($validator['property'])) {
