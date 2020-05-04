@@ -28,12 +28,13 @@ use Neos\Utility\TypeHandling;
 class SettingsValidator extends AbstractValidator
 {
     /**
-     * @var ValidatorResolver
      * @Flow\Inject
+     * @var ValidatorResolver
      */
     protected $validatorResolver;
 
     /**
+     * @Flow\Inject
      * @var ConfigurationManager
      */
     protected $configurationManager;
@@ -42,7 +43,7 @@ class SettingsValidator extends AbstractValidator
      * @var array
      */
     protected $supportedOptions = [
-        'name' => ['', 'Set the name of the setting-array to use', 'string', false],
+        'name' => ['', 'Set the name of the setting-array to use.', 'string', false],
         'validationGroups' => [
             ['Default'],
             'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
@@ -52,40 +53,22 @@ class SettingsValidator extends AbstractValidator
     ];
 
     /**
-     * @var array
-     */
-    protected $validations;
-
-    /**
-     * @param ConfigurationManager $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-        $this->validations = $this->configurationManager->getConfiguration(Package::CONFIGURATION_TYPE_VALIDATION);
-    }
-
-    /**
-     * Check if $value is valid. If it is not valid, needs to add an error
-     * to Result.
-     *
-     * @param mixed $value
+     * @inheritDoc
      * @throws InvalidValidationOptionsException
      * @throws InvalidValidationConfigurationException
      */
     protected function isValid($value)
     {
-        $name = $this->options['name'] ? $this->options['name'] : TypeHandling::getTypeForValue($value);
-        if (!isset($this->validations[$name])) {
+        $validations = $this->configurationManager->getConfiguration(Package::CONFIGURATION_TYPE_VALIDATION);
+        $name = $this->options['name'] ?: TypeHandling::getTypeForValue($value);
+        if (!isset($validations[$name])) {
             throw new InvalidValidationOptionsException(
-                'The name ' . $name . ' has not been defined in Validation.yaml!',
+                'The name "' . $name . '" has not been defined in Validation.yaml!',
                 1397821438
             );
         }
 
-        $config = $this->getConfigForName($name);
-
-        foreach ($config as $validatorConfig) {
+        foreach ($this->getConfigForValidation($validations[$name]) as $validatorConfig) {
             if (!$this->doesValidationGroupsMatch($validatorConfig)) {
                 continue;
             }
@@ -118,32 +101,36 @@ class SettingsValidator extends AbstractValidator
     }
 
     /**
-     * @param string $name
+     * @param array $validation
      * @return array
      */
-    protected function getConfigForName($name): array
+    protected function getConfigForValidation(array $validation): array
     {
         $config = [];
-        if (isset($this->validations[$name]['self'])) {
-            foreach ($this->validations[$name]['self'] as $validator => &$validation) {
-                if (is_null($validation)) {
+
+        if (isset($validation['self'])) {
+            foreach ($validation['self'] as $validator => $options) {
+                if (is_null($options)) {
                     continue;
                 }
-                $newValidation['options'] = $validation;
-                $newValidation['validator'] = $validator;
-                $config[] = $newValidation;
+                $config[] = [
+                    'validator' => $validator,
+                    'options' => $options,
+                ];
             }
         }
-        if (isset($this->validations[$name]['properties'])) {
-            foreach ($this->validations[$name]['properties'] as $propertyName => $validation) {
-                foreach ($validation as $validator => $options) {
+
+        if (isset($validation['properties'])) {
+            foreach ($validation['properties'] as $property => $propertyValidation) {
+                foreach ($propertyValidation as $validator => $options) {
                     if (is_null($options)) {
                         continue;
                     }
-                    $newValidation['property'] = $propertyName;
-                    $newValidation['validator'] = $validator;
-                    $newValidation['options'] = $options;
-                    $config[] = $newValidation;
+                    $config[] = [
+                        'property' => $property,
+                        'validator' => $validator,
+                        'options' => $options,
+                    ];
                 }
             }
         }
@@ -157,21 +144,17 @@ class SettingsValidator extends AbstractValidator
      * @param array $validatorConfig
      * @return bool
      */
-    protected function doesValidationGroupsMatch(array $validatorConfig)
+    protected function doesValidationGroupsMatch(array $validatorConfig): bool
     {
-        if (
-            isset($validatorConfig['options']['validationGroups'])
-            && empty(
+        return
+            !isset($validatorConfig['options']['validationGroups'])
+            || !empty(
                 array_intersect(
                     $validatorConfig['options']['validationGroups'],
                     $this->options['validationGroups']
                 )
             )
-        ) {
-            return false;
-        }
-
-        return true;
+        ;
     }
 
     /**
