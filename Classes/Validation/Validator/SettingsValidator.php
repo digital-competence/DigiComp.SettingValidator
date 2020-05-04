@@ -47,7 +47,7 @@ class SettingsValidator extends AbstractValidator
             ['Default'],
             'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
             'array',
-            false
+            false,
         ],
     ];
 
@@ -76,7 +76,7 @@ class SettingsValidator extends AbstractValidator
     protected function isValid($value)
     {
         $name = $this->options['name'] ? $this->options['name'] : TypeHandling::getTypeForValue($value);
-        if (! isset($this->validations[$name])) {
+        if (!isset($this->validations[$name])) {
             throw new InvalidValidationOptionsException(
                 'The name ' . $name . ' has not been defined in Validation.yaml!',
                 1397821438
@@ -86,7 +86,7 @@ class SettingsValidator extends AbstractValidator
         $config = $this->getConfigForName($name);
 
         foreach ($config as $validatorConfig) {
-            if (! $this->doesValidationGroupsMatch($validatorConfig)) {
+            if (!$this->doesValidationGroupsMatch($validatorConfig)) {
                 continue;
             }
 
@@ -97,7 +97,7 @@ class SettingsValidator extends AbstractValidator
                 $validatorConfig['options']
             );
 
-            if (! $validator) {
+            if (!$validator) {
                 throw new InvalidValidationConfigurationException(
                     sprintf(
                         'Validator could not be resolved: "%s" Check your Validation.yaml',
@@ -147,6 +147,7 @@ class SettingsValidator extends AbstractValidator
                 }
             }
         }
+
         return $config;
     }
 
@@ -158,7 +159,15 @@ class SettingsValidator extends AbstractValidator
      */
     protected function doesValidationGroupsMatch(array $validatorConfig)
     {
-        if (isset($validatorConfig['options']['validationGroups']) && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))) {
+        if (
+            isset($validatorConfig['options']['validationGroups'])
+            && empty(
+                array_intersect(
+                    $validatorConfig['options']['validationGroups'],
+                    $this->options['validationGroups']
+                )
+            )
+        ) {
             return false;
         }
 
