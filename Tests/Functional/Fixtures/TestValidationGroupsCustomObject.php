@@ -7,12 +7,12 @@ class TestValidationGroupsCustomObject
     /**
      * @var bool
      */
-    protected $shouldBeTrue = false;
+    protected bool $shouldBeTrue = false;
 
     /**
      * @var bool
      */
-    protected $shouldBeFalse = true;
+    protected bool $shouldBeFalse = true;
 
     /**
      * @return bool
