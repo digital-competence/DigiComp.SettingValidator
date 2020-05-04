@@ -107,11 +107,11 @@ class SettingsValidator extends AbstractValidator
             }
 
             if (isset($validatorConfig['property'])) {
-                $this->result->forProperty($validatorConfig['property'])->merge(
+                $this->getResult()->forProperty($validatorConfig['property'])->merge(
                     $validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property']))
                 );
             } else {
-                $this->result->merge($validator->validate($value));
+                $this->getResult()->merge($validator->validate($value));
             }
         }
     }
