@@ -135,7 +135,7 @@ class SettingsValidator extends AbstractValidator
             }
         }
         if (isset($this->validations[$name]['properties'])) {
-            foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
+            foreach ($this->validations[$name]['properties'] as $propertyName => $validation) {
                 foreach ($validation as $validator => $options) {
                     if (is_null($options)) {
                         continue;
