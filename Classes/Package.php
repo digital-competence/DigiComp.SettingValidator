@@ -36,7 +36,7 @@ class Package extends BasePackage
             'configurationManagerReady',
             function (ConfigurationManager $configurationManager) {
                 $configurationManager->registerConfigurationType(
-                    static::CONFIGURATION_TYPE_VALIDATION,
+                    self::CONFIGURATION_TYPE_VALIDATION,
                     ConfigurationManager::CONFIGURATION_PROCESSING_TYPE_DEFAULT,
                     true
                 );
