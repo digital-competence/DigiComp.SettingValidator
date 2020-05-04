@@ -12,6 +12,7 @@ namespace DigiComp\SettingValidator\Validation\Validator;
  * source code.
  */
 
+use DigiComp\SettingValidator\Package;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Configuration\ConfigurationManager;
 use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
@@ -61,7 +62,7 @@ class SettingsValidator extends AbstractValidator
     public function injectConfigurationManager(ConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
-        $this->validations = $this->configurationManager->getConfiguration('Validation');
+        $this->validations = $this->configurationManager->getConfiguration(Package::CONFIGURATION_TYPE_VALIDATION);
     }
 
     /**
