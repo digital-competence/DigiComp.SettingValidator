@@ -21,7 +21,7 @@ use Neos\Flow\Package\Package as BasePackage;
  */
 class Package extends BasePackage
 {
-    const CONFIGURATION_TYPE_VALIDATION = 'Validation';
+    public const CONFIGURATION_TYPE_VALIDATION = 'Validation';
 
     /**
      * @param Bootstrap $bootstrap
