@@ -82,7 +82,7 @@ class SettingsValidator extends AbstractValidator
 
             if (!$validator) {
                 throw new InvalidValidationConfigurationException(
-                    sprintf(
+                    \sprintf(
                         'Validator could not be resolved: "%s" Check your Validation.yaml',
                         $validatorConfig['validator']
                     ),
@@ -110,7 +110,7 @@ class SettingsValidator extends AbstractValidator
 
         if (isset($validation['self'])) {
             foreach ($validation['self'] as $validator => $options) {
-                if (is_null($options)) {
+                if ($options === null) {
                     continue;
                 }
                 $config[] = [
@@ -123,7 +123,7 @@ class SettingsValidator extends AbstractValidator
         if (isset($validation['properties'])) {
             foreach ($validation['properties'] as $property => $propertyValidation) {
                 foreach ($propertyValidation as $validator => $options) {
-                    if (is_null($options)) {
+                    if ($options === null) {
                         continue;
                     }
                     $config[] = [
@@ -149,7 +149,7 @@ class SettingsValidator extends AbstractValidator
         return
             !isset($validatorConfig['options']['validationGroups'])
             || !empty(
-                array_intersect(
+                \array_intersect(
                     $validatorConfig['options']['validationGroups'],
                     $this->options['validationGroups']
                 )
