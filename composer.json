@@ -1,7 +1,7 @@
 {
     "name": "digicomp/settingvalidator",
-    "type": "neos-package",
     "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
+    "type": "neos-package",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
