@@ -80,7 +80,7 @@ class SettingsValidator extends AbstractValidator
                 $validatorConfig['options']
             );
 
-            if (!$validator) {
+            if ($validator === null) {
                 throw new InvalidValidationConfigurationException(
                     \sprintf(
                         'Validator could not be resolved: "%s" Check your Validation.yaml',
