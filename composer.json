@@ -32,6 +32,9 @@
         }
     },
     "extra": {
+        "neos": {
+            "package-key": "DigiComp.SettingValidator"
+        },
         "branch-alias": {
             "dev-develop": "2.0.x-dev",
             "dev-version/1.x-dev": "1.0.x-dev"
