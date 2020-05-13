@@ -18,7 +18,8 @@
         "validation"
     ],
     "require": {
-        "neos/flow": "^6.1.5"
+        "neos/flow": "^6.2",
+        "php": "~7.4.0"
     },
     "autoload": {
         "psr-4": {
