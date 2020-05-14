@@ -15,8 +15,10 @@ namespace DigiComp\SettingValidator\Validation\Validator;
 use DigiComp\SettingValidator\Package;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Configuration\ConfigurationManager;
+use Neos\Flow\Configuration\Exception\InvalidConfigurationTypeException;
 use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
 use Neos\Flow\Validation\Exception\InvalidValidationOptionsException;
+use Neos\Flow\Validation\Exception\NoSuchValidatorException;
 use Neos\Flow\Validation\Validator\AbstractValidator;
 use Neos\Flow\Validation\ValidatorResolver;
 use Neos\Utility\ObjectAccess;
@@ -42,7 +44,7 @@ class SettingsValidator extends AbstractValidator
     /**
      * @var array
      */
-    protected $supportedOptions = [
+    protected array $supportedOptions = [
         'name' => ['', 'Set the name of the setting-array to use.', 'string', false],
         'validationGroups' => [
             ['Default'],
@@ -54,8 +56,10 @@ class SettingsValidator extends AbstractValidator
 
     /**
      * @inheritDoc
+     * @throws InvalidConfigurationTypeException
      * @throws InvalidValidationOptionsException
      * @throws InvalidValidationConfigurationException
+     * @throws NoSuchValidatorException
      */
     protected function isValid($value)
     {
