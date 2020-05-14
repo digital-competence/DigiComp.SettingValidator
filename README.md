@@ -7,7 +7,7 @@ Yaml-File in your Configuration directory.
 Let's imagine you had this action-method:
 
     /**
-     * @Flow\Validate(type="DigiComp.SettingValidator:Settings", argumentName="order")
+     * @Flow\Validate(argumentName="order", type="DigiComp.SettingValidator:Settings")
      * @param Order $order
      */
     public function createOrder($order) {...}
