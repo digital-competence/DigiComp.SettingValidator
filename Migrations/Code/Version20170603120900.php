@@ -5,7 +5,7 @@ namespace Neos\Flow\Core\Migrations;
 use DigiComp\SettingValidator\Package;
 
 /**
- * Restructures Validation.yamls to new format
+ * Restructures all Validation.yaml to new format
  */
 class Version20170603120900 extends AbstractMigration
 {
@@ -32,7 +32,7 @@ class Version20170603120900 extends AbstractMigration
                     }
                     $newConfiguration = ['properties' => [], 'self' => []];
 
-                    foreach ($validators as $key => &$validator) {
+                    foreach ($validators as $key => $validator) {
                         if (!isset($validator['validator']) || !isset($validator['options'])) {
                             $this->showWarning(
                                 'The Validation.yaml files contained no validator or options for validation: ' .
