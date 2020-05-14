@@ -7,12 +7,16 @@ use DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsCust
 use DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsDefaultObject;
 use DigiComp\SettingValidator\Validation\Validator\SettingsValidator;
 use Neos\Flow\Tests\FunctionalTestCase;
+use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
+use Neos\Flow\Validation\Exception\InvalidValidationOptionsException;
+use Neos\Flow\Validation\Exception\NoSuchValidatorException;
 use Neos\Flow\Validation\ValidatorResolver;
 
 class SettingsValidatorTest extends FunctionalTestCase
 {
     /**
      * @test
+     * @throws InvalidValidationOptionsException
      */
     public function ifNoNameIsGivenClassNameIsUsed()
     {
@@ -25,6 +29,9 @@ class SettingsValidatorTest extends FunctionalTestCase
 
     /**
      * @test
+     * @throws InvalidValidationConfigurationException
+     * @throws InvalidValidationOptionsException
+     * @throws NoSuchValidatorException
      */
     public function conjunctionValidationWorksAsExpected()
     {
@@ -37,6 +44,7 @@ class SettingsValidatorTest extends FunctionalTestCase
 
     /**
      * @test
+     * @throws InvalidValidationOptionsException
      */
     public function defaultValidationGroupWorks()
     {
@@ -49,6 +57,7 @@ class SettingsValidatorTest extends FunctionalTestCase
 
     /**
      * @test
+     * @throws InvalidValidationOptionsException
      */
     public function customValidationGroupWorks()
     {
