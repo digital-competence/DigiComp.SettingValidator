@@ -12,19 +12,16 @@ class Version20170603120900 extends AbstractMigration
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'DigiComp.SettingValidator-20170603120900';
     }
 
-    /**
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         $this->processConfiguration(
-            Package::CONFIGURATION_TYPE_VALIDATION,
-            function (&$configuration) {
+            'Validation',
+            function (array &$configuration) {
                 foreach ($configuration as $validatorName => &$validators) {
                     // guard that protects configuration, which has already the new format:
                     if (isset($validators['properties']) || isset($validators['self'])) {

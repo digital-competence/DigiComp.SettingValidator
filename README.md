@@ -1,5 +1,4 @@
-DigiComp.SettingValidator
--------------------------
+# DigiComp.SettingValidator
 
 This Package allows configuring Validators for your Action-Arguments or domain model properties to be set by a new
 Yaml-File in your Configuration directory.

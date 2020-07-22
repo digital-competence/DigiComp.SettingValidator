@@ -18,7 +18,7 @@ class SettingsValidatorTest extends FunctionalTestCase
      * @test
      * @throws InvalidValidationOptionsException
      */
-    public function ifNoNameIsGivenClassNameIsUsed()
+    public function ifNoNameIsGivenClassNameIsUsed(): void
     {
         $validator = $this->objectManager->get(SettingsValidator::class);
         $result = $validator->validate(new TestObject());
@@ -33,7 +33,7 @@ class SettingsValidatorTest extends FunctionalTestCase
      * @throws InvalidValidationOptionsException
      * @throws NoSuchValidatorException
      */
-    public function conjunctionValidationWorksAsExpected()
+    public function conjunctionValidationWorksAsExpected(): void
     {
         $validatorResolver = $this->objectManager->get(ValidatorResolver::class);
         $validator = $validatorResolver->getBaseValidatorConjunction(TestObject::class);
@@ -46,7 +46,7 @@ class SettingsValidatorTest extends FunctionalTestCase
      * @test
      * @throws InvalidValidationOptionsException
      */
-    public function defaultValidationGroupWorks()
+    public function defaultValidationGroupWorks(): void
     {
         $validator = $this->objectManager->get(SettingsValidator::class, ['validationGroups' => ['Default']]);
         $result = $validator->validate(new TestValidationGroupsDefaultObject());
@@ -59,7 +59,7 @@ class SettingsValidatorTest extends FunctionalTestCase
      * @test
      * @throws InvalidValidationOptionsException
      */
-    public function customValidationGroupWorks()
+    public function customValidationGroupWorks(): void
     {
         $validator = $this->objectManager->get(SettingsValidator::class, ['validationGroups' => ['Custom']]);
         $result = $validator->validate(new TestValidationGroupsCustomObject());

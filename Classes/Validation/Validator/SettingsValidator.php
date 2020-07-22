@@ -12,10 +12,7 @@ namespace DigiComp\SettingValidator\Validation\Validator;
  * source code.
  */
 
-use DigiComp\SettingValidator\Package;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Configuration\ConfigurationManager;
-use Neos\Flow\Configuration\Exception\InvalidConfigurationTypeException;
 use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
 use Neos\Flow\Validation\Exception\InvalidValidationOptionsException;
 use Neos\Flow\Validation\Exception\NoSuchValidatorException;
@@ -36,35 +33,30 @@ class SettingsValidator extends AbstractValidator
     protected $validatorResolver;
 
     /**
-     * @Flow\Inject
-     * @var ConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
+     * @Flow\InjectConfiguration(type="Validation")
      * @var array
      */
-    protected array $supportedOptions = [
-        'name' => ['', 'Set the name of the setting-array to use.', 'string', false],
-        'validationGroups' => [
-            ['Default'],
-            'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
-            'array',
-            false,
-        ],
+    protected array $validations;
+
+    /**
+     * @inheritDoc
+     */
+    protected $supportedOptions = [
+        'name' => ['', 'Name of the setting array to use', 'string'],
+        'validationGroups' => [['Default'], 'Same as "Validation Groups" of Flow Framework', 'array'],
     ];
 
     /**
      * @inheritDoc
-     * @throws InvalidConfigurationTypeException
      * @throws InvalidValidationOptionsException
      * @throws InvalidValidationConfigurationException
      * @throws NoSuchValidatorException
      */
-    protected function isValid($value)
+    protected function isValid($value): void
     {
-        $validations = $this->configurationManager->getConfiguration(Package::CONFIGURATION_TYPE_VALIDATION);
-        $name = $this->options['name'] ?: TypeHandling::getTypeForValue($value);
+        $validations = $this->validations;
+
+        $name = $this->options['name'] !== '' ? $this->options['name'] : TypeHandling::getTypeForValue($value);
         if (!isset($validations[$name])) {
             throw new InvalidValidationOptionsException(
                 'The name "' . $name . '" has not been defined in Validation.yaml!',
@@ -152,12 +144,10 @@ class SettingsValidator extends AbstractValidator
     {
         return
             !isset($validatorConfig['options']['validationGroups'])
-            || !empty(
-                \array_intersect(
-                    $validatorConfig['options']['validationGroups'],
-                    $this->options['validationGroups']
-                )
-            )
+            || \array_intersect(
+                $validatorConfig['options']['validationGroups'],
+                $this->options['validationGroups']
+            ) !== []
         ;
     }
 
@@ -166,7 +156,7 @@ class SettingsValidator extends AbstractValidator
      *
      * @param array $validatorConfig
      */
-    protected function handleValidationGroups(array &$validatorConfig)
+    protected function handleValidationGroups(array &$validatorConfig): void
     {
         if ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings') {
             $validatorConfig['options']['validationGroups'] = $this->options['validationGroups'];
