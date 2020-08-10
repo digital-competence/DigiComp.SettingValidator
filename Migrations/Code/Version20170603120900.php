@@ -2,8 +2,6 @@
 
 namespace Neos\Flow\Core\Migrations;
 
-use DigiComp\SettingValidator\Package;
-
 /**
  * Restructures all Validation.yaml to new format
  */
