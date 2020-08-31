@@ -2,29 +2,24 @@
 
 namespace Neos\Flow\Core\Migrations;
 
-use DigiComp\SettingValidator\Package;
-
 /**
- * Restructures Validation.yamls to new format
+ * Restructures all Validation.yaml to new format
  */
 class Version20170603120900 extends AbstractMigration
 {
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return 'DigiComp.SettingValidator-20170603120900';
     }
 
-    /**
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         $this->processConfiguration(
-            Package::CONFIGURATION_TYPE_VALIDATION,
-            function (&$configuration) {
+            'Validation',
+            function (array &$configuration) {
                 foreach ($configuration as $validatorName => &$validators) {
                     // guard that protects configuration, which has already the new format:
                     if (isset($validators['properties']) || isset($validators['self'])) {
@@ -32,10 +27,12 @@ class Version20170603120900 extends AbstractMigration
                     }
                     $newConfiguration = ['properties' => [], 'self' => []];
 
-                    foreach ($validators as $key => &$validator) {
-                        if (! isset($validator['validator']) || ! isset($validator['options'])) {
-                            $this->showWarning('The Validation.yaml files contained no validator or options for ' .
-                                'validation: "' . $validatorName . '.' . $key . '". It was not migrated.');
+                    foreach ($validators as $key => $validator) {
+                        if (!isset($validator['validator']) || !isset($validator['options'])) {
+                            $this->showWarning(
+                                'The Validation.yaml files contained no validator or options for validation: ' .
+                                '"' . $validatorName . '.' . $key . '". It was not migrated.'
+                            );
                             continue;
                         }
                         if (isset($validator['property'])) {
