@@ -14,19 +14,17 @@ namespace DigiComp\SettingValidator;
 
 use Neos\Flow\Configuration\ConfigurationManager;
 use Neos\Flow\Core\Bootstrap;
-use Neos\Flow\Package\Package as BasePackage;
+use Neos\Flow\Package\Package as NeosFlowPackagePackage;
 
 /**
  * Package base class of the DigiComp.SettingValidator package.
  */
-class Package extends BasePackage
+class Package extends NeosFlowPackagePackage
 {
-    const CONFIGURATION_TYPE_VALIDATION = 'Validation';
-
     /**
      * @param Bootstrap $bootstrap
      */
-    public function boot(Bootstrap $bootstrap)
+    public function boot(Bootstrap $bootstrap): void
     {
         parent::boot($bootstrap);
 
@@ -35,11 +33,7 @@ class Package extends BasePackage
             ConfigurationManager::class,
             'configurationManagerReady',
             function (ConfigurationManager $configurationManager) {
-                $configurationManager->registerConfigurationType(
-                    static::CONFIGURATION_TYPE_VALIDATION,
-                    ConfigurationManager::CONFIGURATION_PROCESSING_TYPE_DEFAULT,
-                    true
-                );
+                $configurationManager->registerConfigurationType('Validation');
             }
         );
     }

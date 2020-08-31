@@ -13,10 +13,9 @@ namespace DigiComp\SettingValidator\Validation\Validator;
  */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Configuration\ConfigurationManager;
-use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Validation\Exception\InvalidValidationConfigurationException;
 use Neos\Flow\Validation\Exception\InvalidValidationOptionsException;
+use Neos\Flow\Validation\Exception\NoSuchValidatorException;
 use Neos\Flow\Validation\Validator\AbstractValidator;
 use Neos\Flow\Validation\ValidatorResolver;
 use Neos\Utility\ObjectAccess;
@@ -28,73 +27,45 @@ use Neos\Utility\TypeHandling;
 class SettingsValidator extends AbstractValidator
 {
     /**
-     * @var ValidatorResolver
      * @Flow\Inject
+     * @var ValidatorResolver
      */
     protected $validatorResolver;
 
     /**
-     * @var ConfigurationManager
-     */
-    protected $configurationManager;
-
-    /**
-     * @var ReflectionService
-     * @Flow\Inject
-     * @deprecated
-     */
-    protected $reflectionService;
-
-    /**
+     * @Flow\InjectConfiguration(type="Validation")
      * @var array
      */
+    protected array $validations;
+
+    /**
+     * @inheritDoc
+     */
     protected $supportedOptions = [
-        'name' => ['', 'Set the name of the setting-array to use', 'string', false],
-        'validationGroups' => [
-            ['Default'],
-            'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
-            'array',
-            false
-        ],
+        'name' => ['', 'Name of the setting array to use', 'string'],
+        'validationGroups' => [['Default'], 'Same as "Validation Groups" of Flow Framework', 'array'],
     ];
 
     /**
-     * @var array
-     */
-    protected $validations;
-
-    /**
-     * @param ConfigurationManager $configurationManager
-     */
-    public function injectConfigurationManager(ConfigurationManager $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-        $this->validations = $this->configurationManager->getConfiguration('Validation');
-    }
-
-    /**
-     * Check if $value is valid. If it is not valid, needs to add an error
-     * to Result.
-     *
-     * @param mixed $value
-     *
+     * @inheritDoc
      * @throws InvalidValidationOptionsException
      * @throws InvalidValidationConfigurationException
+     * @throws NoSuchValidatorException
      */
-    protected function isValid($value)
+    protected function isValid($value): void
     {
-        $name = $this->options['name'] ? $this->options['name'] : TypeHandling::getTypeForValue($value);
-        if (! isset($this->validations[$name])) {
+        $validations = $this->validations;
+
+        $name = $this->options['name'] !== '' ? $this->options['name'] : TypeHandling::getTypeForValue($value);
+        if (!isset($validations[$name])) {
             throw new InvalidValidationOptionsException(
-                'The name ' . $name . ' has not been defined in Validation.yaml!',
+                'The name "' . $name . '" has not been defined in Validation.yaml!',
                 1397821438
             );
         }
 
-        $config = $this->getConfigForName($name);
-
-        foreach ($config as $validatorConfig) {
-            if (! $this->doesValidationGroupsMatch($validatorConfig)) {
+        foreach ($this->getConfigForValidation($validations[$name]) as $validatorConfig) {
+            if (!$this->doesValidationGroupsMatch($validatorConfig)) {
                 continue;
             }
 
@@ -105,10 +76,10 @@ class SettingsValidator extends AbstractValidator
                 $validatorConfig['options']
             );
 
-            if (! $validator) {
+            if ($validator === null) {
                 throw new InvalidValidationConfigurationException(
-                    sprintf(
-                        'Validator could not be resolved: "%s" Check your Validation.yaml',
+                    \sprintf(
+                        'Validator "%s" could not be resolved. Check your Validation.yaml',
                         $validatorConfig['validator']
                     ),
                     1402326139
@@ -116,46 +87,50 @@ class SettingsValidator extends AbstractValidator
             }
 
             if (isset($validatorConfig['property'])) {
-                $this->result->forProperty($validatorConfig['property'])->merge(
+                $this->getResult()->forProperty($validatorConfig['property'])->merge(
                     $validator->validate(ObjectAccess::getPropertyPath($value, $validatorConfig['property']))
                 );
             } else {
-                $this->result->merge($validator->validate($value));
+                $this->getResult()->merge($validator->validate($value));
             }
         }
     }
 
     /**
-     * @param string $name
-     *
+     * @param array $validation
      * @return array
      */
-    protected function getConfigForName($name): array
+    protected function getConfigForValidation(array $validation): array
     {
         $config = [];
-        if (isset($this->validations[$name]['self'])) {
-            foreach ($this->validations[$name]['self'] as $validator => &$validation) {
-                if (is_null($validation)) {
+
+        if (isset($validation['self'])) {
+            foreach ($validation['self'] as $validator => $options) {
+                if ($options === null) {
                     continue;
                 }
-                $newValidation['options'] = $validation;
-                $newValidation['validator'] = $validator;
-                $config[] = $newValidation;
+                $config[] = [
+                    'validator' => $validator,
+                    'options' => $options,
+                ];
             }
         }
-        if (isset($this->validations[$name]['properties'])) {
-            foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
-                foreach ($validation as $validator => &$options) {
-                    if (is_null($options)) {
+
+        if (isset($validation['properties'])) {
+            foreach ($validation['properties'] as $property => $propertyValidation) {
+                foreach ($propertyValidation as $validator => $options) {
+                    if ($options === null) {
                         continue;
                     }
-                    $newValidation['property'] = $propertyName;
-                    $newValidation['validator'] = $validator;
-                    $newValidation['options'] = $options;
-                    $config[] = $newValidation;
+                    $config[] = [
+                        'property' => $property,
+                        'validator' => $validator,
+                        'options' => $options,
+                    ];
                 }
             }
         }
+
         return $config;
     }
 
@@ -163,16 +138,15 @@ class SettingsValidator extends AbstractValidator
      * Check whether at least one configured group does match, if any is configured.
      *
      * @param array $validatorConfig
-     *
      * @return bool
      */
-    protected function doesValidationGroupsMatch(array &$validatorConfig)
+    protected function doesValidationGroupsMatch(array $validatorConfig): bool
     {
-        if (isset($validatorConfig['options']['validationGroups']) && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))) {
-            return false;
-        }
-
-        return true;
+        return !isset($validatorConfig['options']['validationGroups'])
+            || \array_intersect(
+                $validatorConfig['options']['validationGroups'],
+                $this->options['validationGroups']
+            ) !== [];
     }
 
     /**
@@ -180,12 +154,12 @@ class SettingsValidator extends AbstractValidator
      *
      * @param array $validatorConfig
      */
-    protected function handleValidationGroups(array &$validatorConfig)
+    protected function handleValidationGroups(array &$validatorConfig): void
     {
-        if (isset($validatorConfig['options']['validationGroups']) && $validatorConfig['validator'] !== 'DigiComp.SettingValidator:Settings') {
-            unset($validatorConfig['options']['validationGroups']);
-        } elseif ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings') {
+        if ($validatorConfig['validator'] === 'DigiComp.SettingValidator:Settings') {
             $validatorConfig['options']['validationGroups'] = $this->options['validationGroups'];
+        } elseif (isset($validatorConfig['options']['validationGroups'])) {
+            unset($validatorConfig['options']['validationGroups']);
         }
     }
 }

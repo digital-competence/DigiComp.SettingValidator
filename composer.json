@@ -1,7 +1,7 @@
 {
     "name": "digicomp/settingvalidator",
-    "type": "neos-package",
     "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
+    "type": "neos-package",
     "authors": [
         {
             "name": "Ferdinand Kuhl",
@@ -18,7 +18,8 @@
         "validation"
     ],
     "require": {
-        "neos/flow": "~4.1|^5.3"
+        "neos/flow": "^6.2.3",
+        "php": "~7.4.0"
     },
     "autoload": {
         "psr-4": {
@@ -31,9 +32,12 @@
         }
     },
     "extra": {
+        "neos": {
+            "package-key": "DigiComp.SettingValidator"
+        },
         "branch-alias": {
-            "dev-develop": "2.0.x-dev",
-            "dev-version/1.x-dev": "1.0.x-dev"
+            "dev-develop": "3.0.x-dev",
+            "dev-version/1.x-dev": "1.1.x-dev"
         },
         "applied-flow-migrations": [
             "Inwebs.Basket-201409170938",
@@ -67,7 +71,9 @@
             "Neos.Flow-20170125103800",
             "Neos.Flow-20170127183102",
             "DigiComp.SettingValidator-20170603120900",
-            "Neos.Flow-20180415105700"
+            "Neos.Flow-20180415105700",
+            "Neos.Flow-20190425144900",
+            "Neos.Flow-20190515215000"
         ]
     }
 }

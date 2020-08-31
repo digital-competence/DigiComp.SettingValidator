@@ -9,18 +9,18 @@ class TestObject
     /**
      * @var bool
      */
-    protected $shouldBeTrue = true;
+    protected bool $shouldBeTrue = true;
 
     /**
      * @var bool
      */
-    protected $shouldBeFalse = true;
+    protected bool $shouldBeFalse = true;
 
     /**
      * @Flow\Validate(type="DigiComp.SettingValidator:Settings", options={"name"="TrueValidator"})
      * @var bool
      */
-    protected $shouldBeTrueAndValidatedByAnnotation = false;
+    protected bool $shouldBeTrueAndValidatedByAnnotation = false;
 
     /**
      * @return bool
