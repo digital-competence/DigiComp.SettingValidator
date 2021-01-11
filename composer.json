@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "DigiComp\\SettingValidator\\": "Classes"
+            "DigiComp\\SettingValidator\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DigiComp\\SettingValidator\\Tests\\": "Tests"
+            "DigiComp\\SettingValidator\\Tests\\": "Tests/"
         }
     },
     "extra": {
@@ -36,7 +36,7 @@
             "package-key": "DigiComp.SettingValidator"
         },
         "branch-alias": {
-            "dev-develop": "3.0.x-dev",
+            "dev-develop": "3.1.x-dev",
             "dev-version/1.x-dev": "1.1.x-dev"
         },
         "applied-flow-migrations": [
