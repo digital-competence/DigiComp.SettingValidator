@@ -18,7 +18,7 @@
         "validation"
     ],
     "require": {
-        "neos/flow": "^6.3",
+        "neos/flow": "^6.3.5",
         "php": "~7.4.0"
     },
     "autoload": {
