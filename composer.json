@@ -2,23 +2,8 @@
     "name": "digicomp/settingvalidator",
     "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
     "type": "neos-package",
-    "authors": [
-        {
-            "name": "Ferdinand Kuhl",
-            "email": "f.kuhl@digital-competence.de",
-            "homepage": "http://www.digital-competence.de",
-            "role": "Developer"
-        }
-    ],
-    "license": "MIT",
-    "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
-    "keywords": [
-        "Neos",
-        "Flow",
-        "validation"
-    ],
     "require": {
-        "neos/flow": "^6.3",
+        "neos/flow": "^6.3.5",
         "php": "~7.4.0"
     },
     "autoload": {
@@ -36,8 +21,8 @@
             "package-key": "DigiComp.SettingValidator"
         },
         "branch-alias": {
-            "dev-develop": "3.1.x-dev",
-            "dev-version/1.x-dev": "1.1.x-dev"
+            "dev-develop": "3.0.x-dev",
+            "dev-version/1.x-dev": "1.0.x-dev"
         },
         "applied-flow-migrations": [
             "Inwebs.Basket-201409170938",
@@ -75,5 +60,20 @@
             "Neos.Flow-20190425144900",
             "Neos.Flow-20190515215000"
         ]
-    }
+    },
+    "authors": [
+        {
+            "name": "Ferdinand Kuhl",
+            "email": "f.kuhl@digital-competence.de",
+            "homepage": "http://www.digital-competence.de",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/fcool/DigiComp.SettingValidator",
+    "keywords": [
+        "Neos",
+        "Flow",
+        "validation"
+    ]
 }

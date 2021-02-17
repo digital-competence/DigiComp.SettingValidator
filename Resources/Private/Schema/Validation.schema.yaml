@@ -1,11 +1,11 @@
-type: 'dictionary'
+type: "dictionary"
 additionalProperties:
-  type: 'dictionary'
+  type: "dictionary"
   additionalProperties: false
   properties:
-    type: 'dictionary'
+    type: "dictionary"
     additionalProperties: false
     properties:
-      type: 'dictionary'
+      type: "dictionary"
     self:
-      type: 'dictionary'
+      type: "dictionary"

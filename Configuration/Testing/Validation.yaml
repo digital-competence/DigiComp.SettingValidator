@@ -16,12 +16,12 @@ TrueValidator:
 DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsCustomObject:
   self:
     DigiComp.SettingValidator:Settings:
-      name: 'GroupValidatorCustom'
+      name: "GroupValidatorCustom"
 
 DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsDefaultObject:
   self:
     DigiComp.SettingValidator:Settings:
-      name: 'GroupValidatorDefault'
+      name: "GroupValidatorDefault"
 
 GroupValidatorDefault:
   properties:
@@ -35,4 +35,4 @@ GroupValidatorCustom:
       BooleanValue:
         expectedValue: false
         validationGroups:
-          - 'Custom'
+          - "Custom"
