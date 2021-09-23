@@ -32,7 +32,7 @@ class Package extends NeosFlowPackagePackage
         $dispatcher->connect(
             ConfigurationManager::class,
             'configurationManagerReady',
-            function (ConfigurationManager $configurationManager) {
+            function (ConfigurationManager $configurationManager): void {
                 $configurationManager->registerConfigurationType('Validation');
             }
         );

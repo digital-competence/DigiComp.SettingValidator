@@ -19,7 +19,7 @@ class Version20170603120900 extends AbstractMigration
     {
         $this->processConfiguration(
             'Validation',
-            function (array &$configuration) {
+            function (array &$configuration): void {
                 foreach ($configuration as $validatorName => &$validators) {
                     // guard that protects configuration, which has already the new format:
                     if (isset($validators['properties']) || isset($validators['self'])) {
