@@ -22,13 +22,14 @@ use Neos\Flow\Package\Package as NeosFlowPackagePackage;
 class Package extends NeosFlowPackagePackage
 {
     /**
-     * @param Bootstrap $bootstrap
+     * @inheritDoc
      */
     public function boot(Bootstrap $bootstrap): void
     {
         parent::boot($bootstrap);
 
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
+
         $dispatcher->connect(
             ConfigurationManager::class,
             'configurationManagerReady',
