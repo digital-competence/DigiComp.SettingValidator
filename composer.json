@@ -4,7 +4,7 @@
     "type": "neos-package",
     "require": {
         "neos/flow": "^6.3.5",
-        "php": "~7.4.0"
+        "php": ">=7.4"
     },
     "autoload": {
         "psr-4": {
