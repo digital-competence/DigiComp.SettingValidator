@@ -15,6 +15,9 @@ class Version20170603120900 extends AbstractMigration
         return 'DigiComp.SettingValidator-20170603120900';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function up(): void
     {
         $this->processConfiguration(
