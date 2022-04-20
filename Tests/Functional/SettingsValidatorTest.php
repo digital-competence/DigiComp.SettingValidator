@@ -22,9 +22,9 @@ class SettingsValidatorTest extends FunctionalTestCase
     {
         $result = $this->objectManager->get(SettingsValidator::class)->validate(new TestObject());
 
-        $this->assertTrue($result->hasErrors());
-        $this->assertCount(1, $result->getFlattenedErrors());
-        $this->assertCount(1, $result->forProperty('shouldBeFalse')->getErrors());
+        self::assertTrue($result->hasErrors());
+        self::assertCount(1, $result->getFlattenedErrors());
+        self::assertCount(1, $result->forProperty('shouldBeFalse')->getErrors());
     }
 
     /**
@@ -40,8 +40,8 @@ class SettingsValidatorTest extends FunctionalTestCase
             ->getBaseValidatorConjunction(TestObject::class)
             ->validate(new TestObject());
 
-        $this->assertTrue($result->hasErrors());
-        $this->assertCount(1, $result->getFlattenedErrors());
+        self::assertTrue($result->hasErrors());
+        self::assertCount(1, $result->getFlattenedErrors());
     }
 
     /**
@@ -54,9 +54,9 @@ class SettingsValidatorTest extends FunctionalTestCase
             ->get(SettingsValidator::class, ['validationGroups' => ['Default']])
             ->validate(new TestValidationGroupsDefaultObject());
 
-        $this->assertTrue($result->hasErrors(), 'No errors for validation group "Default"');
-        $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Default"');
-        $this->assertCount(1, $result->forProperty('shouldBeTrue')->getErrors(), 'Got no error for property');
+        self::assertTrue($result->hasErrors(), 'No errors for validation group "Default"');
+        self::assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Default"');
+        self::assertCount(1, $result->forProperty('shouldBeTrue')->getErrors(), 'Got no error for property');
     }
 
     /**
@@ -69,8 +69,8 @@ class SettingsValidatorTest extends FunctionalTestCase
             ->get(SettingsValidator::class, ['validationGroups' => ['Custom']])
             ->validate(new TestValidationGroupsCustomObject());
 
-        $this->assertTrue($result->hasErrors(), 'No errors for validation group "Custom"');
-        $this->assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Custom"');
-        $this->assertCount(1, $result->forProperty('shouldBeFalse')->getErrors(), 'Got no error for property');
+        self::assertTrue($result->hasErrors(), 'No errors for validation group "Custom"');
+        self::assertCount(1, $result->getFlattenedErrors(), 'Got a non expected number of errors for group "Custom"');
+        self::assertCount(1, $result->forProperty('shouldBeFalse')->getErrors(), 'Got no error for property');
     }
 }
