@@ -1,0 +1,29 @@
+{
+    "name": "digicomp/settingvalidator-distribution",
+    "description": "SettingValidator Distribution",
+    "config": {
+        "vendor-dir": "Packages/Libraries",
+        "bin-dir": "bin",
+        "platform": {
+            "php": "7.4.0"
+        }
+    },
+    "require": {
+        "digicomp/settingvalidator": "*@dev",
+        "php": "~7.4.0"
+    },
+    "require-dev": {
+        "neos/buildessentials": "^5.3",
+        "phpunit/phpunit": "~8.1",
+        "mikey179/vfsstream": "~1.6"
+    },
+    "repositories": [
+        { "type": "path", "url": "../../../src" }
+    ],
+    "scripts": {
+        "post-update-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
+        "post-install-cmd": "Neos\\Flow\\Composer\\InstallerScripts::postUpdateAndInstall",
+        "post-package-update": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall",
+        "post-package-install": "Neos\\Flow\\Composer\\InstallerScripts::postPackageUpdateAndInstall"
+    }
+}
