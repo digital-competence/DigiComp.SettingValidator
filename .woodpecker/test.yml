@@ -1,0 +1,7 @@
+pipeline:
+  build:
+    image: composer
+    commands:
+      - cd .woodpecker/Build
+      - composer install
+      - bin/phpunit --configuration Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/DigiComp.SettingValidator/Tests/Functional
