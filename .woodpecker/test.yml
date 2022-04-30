@@ -1,7 +1,26 @@
+workspace:
+  base: /woodpecker
+  path: package
+
+matrix:
+  NEOS_VERSION:
+    # - 4.3 not possible, because 4.3 does not run work with composer 2 - we had to install an older version of composer, too
+    - 5.3
+
 pipeline:
-  build:
-    image: composer
+  functional-tests:
+    image: thecodingmachine/php:7.4-v4-cli
+    environment:
+      # Enable the PDO_SQLITE extension
+      - "PHP_EXTENSION_PDO_SQLITE=1"
+      - "NEOS_VERSION=${NEOS_VERSION}"
+      - "NEOS_BUILD_DIR=/woodpecker/Build-$NEOS_VERSION"
     commands:
-      - cd .woodpecker/Build
-      - composer install
-      - bin/phpunit --configuration Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/DigiComp.SettingValidator/Tests/Functional
+      - "sudo mkdir $NEOS_BUILD_DIR"
+      - "sudo chown -R docker:docker $NEOS_BUILD_DIR"
+      - "cd $NEOS_BUILD_DIR"
+      - "composer create-project --no-install neos/flow-base-distribution:^$NEOS_VERSION ."
+      - "composer config repositories.repo-name path /woodpecker/package"
+      - "composer remove --dev neos/behat"
+      - "composer require digicomp/settingvalidator:@dev"
+      - "bin/phpunit --configuration Build/BuildEssentials/PhpUnit/FunctionalTests.xml Packages/Application/DigiComp.SettingValidator/Tests/Functional"
