@@ -28,8 +28,8 @@ use Neos\Utility\TypeHandling;
 class SettingsValidator extends AbstractValidator
 {
     /**
-     * @var ValidatorResolver
      * @Flow\Inject
+     * @var ValidatorResolver
      */
     protected $validatorResolver;
 
@@ -39,9 +39,9 @@ class SettingsValidator extends AbstractValidator
     protected $configurationManager;
 
     /**
-     * @var ReflectionService
      * @Flow\Inject
      * @deprecated
+     * @var ReflectionService
      */
     protected $reflectionService;
 
@@ -54,7 +54,7 @@ class SettingsValidator extends AbstractValidator
             ['Default'],
             'Same as "Validation Groups" of Flow Framework. Defines the groups to execute.',
             'array',
-            false
+            false,
         ],
     ];
 
@@ -107,7 +107,7 @@ class SettingsValidator extends AbstractValidator
 
             if (! $validator) {
                 throw new InvalidValidationConfigurationException(
-                    sprintf(
+                    \sprintf(
                         'Validator could not be resolved: "%s" Check your Validation.yaml',
                         $validatorConfig['validator']
                     ),
@@ -135,7 +135,7 @@ class SettingsValidator extends AbstractValidator
         $config = [];
         if (isset($this->validations[$name]['self'])) {
             foreach ($this->validations[$name]['self'] as $validator => &$validation) {
-                if (is_null($validation)) {
+                if ($validation === null) {
                     continue;
                 }
                 $newValidation['options'] = $validation;
@@ -146,7 +146,7 @@ class SettingsValidator extends AbstractValidator
         if (isset($this->validations[$name]['properties'])) {
             foreach ($this->validations[$name]['properties'] as $propertyName => &$validation) {
                 foreach ($validation as $validator => &$options) {
-                    if (is_null($options)) {
+                    if ($options === null) {
                         continue;
                     }
                     $newValidation['property'] = $propertyName;
@@ -168,7 +168,10 @@ class SettingsValidator extends AbstractValidator
      */
     protected function doesValidationGroupsMatch(array &$validatorConfig)
     {
-        if (isset($validatorConfig['options']['validationGroups']) && empty(array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']))) {
+        if (
+            isset($validatorConfig['options']['validationGroups'])
+            && \array_intersect($validatorConfig['options']['validationGroups'], $this->options['validationGroups']) === []
+        ) {
             return false;
         }
 
