@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Neos\Flow\Core\Migrations;
 
 /**
@@ -15,11 +17,14 @@ class Version20170603120900 extends AbstractMigration
         return 'DigiComp.SettingValidator-20170603120900';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function up(): void
     {
         $this->processConfiguration(
             'Validation',
-            function (array &$configuration) {
+            function (array &$configuration): void {
                 foreach ($configuration as $validatorName => &$validators) {
                     // guard that protects configuration, which has already the new format:
                     if (isset($validators['properties']) || isset($validators['self'])) {

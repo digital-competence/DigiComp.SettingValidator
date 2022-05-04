@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\SettingValidator\Tests\Functional\Fixtures;
 
 class TestValidationGroupsDefaultObject

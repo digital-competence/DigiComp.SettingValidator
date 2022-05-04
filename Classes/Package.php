@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigiComp\SettingValidator;
 
 /*
@@ -22,17 +24,18 @@ use Neos\Flow\Package\Package as NeosFlowPackagePackage;
 class Package extends NeosFlowPackagePackage
 {
     /**
-     * @param Bootstrap $bootstrap
+     * @inheritDoc
      */
     public function boot(Bootstrap $bootstrap): void
     {
         parent::boot($bootstrap);
 
         $dispatcher = $bootstrap->getSignalSlotDispatcher();
+
         $dispatcher->connect(
             ConfigurationManager::class,
             'configurationManagerReady',
-            function (ConfigurationManager $configurationManager) {
+            function (ConfigurationManager $configurationManager): void {
                 $configurationManager->registerConfigurationType('Validation');
             }
         );

@@ -8,11 +8,6 @@ DigiComp\SettingValidator\Tests\Functional\Fixtures\TestObject:
         expectedValue: false
       Grumble: ~
 
-TrueValidator:
-  self:
-    BooleanValue:
-      expectedValue: true
-
 DigiComp\SettingValidator\Tests\Functional\Fixtures\TestValidationGroupsCustomObject:
   self:
     DigiComp.SettingValidator:Settings:
@@ -36,3 +31,8 @@ GroupValidatorCustom:
         expectedValue: false
         validationGroups:
           - "Custom"
+
+TrueValidator:
+  self:
+    BooleanValue:
+      expectedValue: true
