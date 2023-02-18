@@ -3,7 +3,7 @@
     "description": "Just a Neos\\Flow Validator resolving other Validators with Configuration/Validation.yaml",
     "type": "neos-package",
     "require": {
-        "neos/flow": "^6.3.5",
+        "neos/flow": "^6.3.5 | ^7.0 | ^8.0",
         "php": ">=7.4"
     },
     "require-dev": {
